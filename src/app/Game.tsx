@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Alert, Dimensions, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { useGameContext } from "./context/GameContext";
 
 export default function Game() {
@@ -101,7 +101,7 @@ export default function Game() {
         return () => clearInterval(interval);
     }, [moveSnake]);
 
-    // Skułeś się
+    // GEJM OWER
     useEffect(() => {
         if (isGameOver) {
             Alert.alert("Koniec!", `Twój wynik: ${snake.length - START_LENGTH}`, [
@@ -110,35 +110,7 @@ export default function Game() {
         }
     }, [isGameOver]);
 
-    // Obsługa strzałek klawiatury (tylko dla wersji Web)
-    useEffect(() => {
-        // Jeśli to nie jest przeglądarka, całkowicie ignorujemy ten kod
-        if (Platform.OS !== 'web') return;
-
-        const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.key) {
-                case "ArrowUp":
-                    setDirection(prev => prev !== "down" ? "up" : prev);
-                    break;
-                case "ArrowDown":
-                    setDirection(prev => prev !== "up" ? "down" : prev);
-                    break;
-                case "ArrowLeft":
-                    setDirection(prev => prev !== "right" ? "left" : prev);
-                    break;
-                case "ArrowRight":
-                    setDirection(prev => prev !== "left" ? "right" : prev);
-                    break;
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, []);
-
+    
     return (
         <View style={localStyles.container}>
             <View style={{ position: 'absolute', top: 40, left: 20 }}>
