@@ -1,98 +1,84 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useGameContext } from "./context/GameContext";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function index() {
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
+  const router = useRouter();
+
+  const [playerName, setPlayerName] = useState("Jaś Fasola");
+  const { updateSettings } = useGameContext();
+
+  const handleStartGame = async () => {
+    if(playerName.length >= 3) {
+      try {
+        await updateSettings({ nickname: playerName });
+        
+        router.push("/Game");
+      } catch (error) {
+        console.error("Error saving player name: ", error);
+      }
+    }
   }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
+
+  const handleSettings = () => {
+    router.push("/Settings");
   }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+
+  const handleHighScores = () => {
+    router.push("/HighScores");
+  }
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+     
+      <View style={styles.inputName}>
+        <Text style={styles.label}>Podaj swoje imię:</Text>
+        <TextInput style={{ height: 40, borderColor: "gray", borderWidth: 1, width: "60%", marginTop: 10, paddingHorizontal: 10 }}
+          placeholder="Jaś Fasola"
+          value={playerName}
+          onChangeText={(text) => setPlayerName(text || "")}
+        />
+        
+        <Pressable onPress={handleStartGame} disabled={playerName.length < 3}>
+          <Text disabled={playerName.length < 3} style={[styles.buttonText, playerName.length < 3 ? styles.disabledButton : styles.activeButton]}>Rozpocznij grę</Text>
+        </Pressable>
+        <Pressable onPress={handleSettings}>
+          <Text style={[styles.buttonText, styles.activeButton]}>Ustawienia</Text>
+        </Pressable>
+        <Pressable onPress={handleHighScores}>
+          <Text style={[styles.buttonText, styles.activeButton]}>Wyniki</Text>
+        </Pressable>
+      </View>
+    
   );
 }
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+export const styles = StyleSheet.create({
+  inputName: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  label: {
+    fontSize: 18,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  buttonText: {
+    fontSize: 18,
+    color: "#FAFAFA",
+    marginTop: 20,
+    backgroundColor: "lightgray",
+    padding: 10,
+    borderRadius: 5,
   },
-  title: {
-    textAlign: 'center',
+  disabledButton: {
+    backgroundColor: "lightgray",
+    opacity: 0.5,
   },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  activeButton: {
+    backgroundColor: "blue",
+    opacity: 1,
   },
 });
