@@ -20,6 +20,7 @@ type GameContextType = {
     updateSettings: (newSettings: Partial<Settings>) => void;
     highScores: Score[];
     saveScore: (points: number) => void;
+    clearHighScores: () => Promise<void>;
 };
 
 export const GameContext = createContext<GameContextType | null>(null);
@@ -65,8 +66,13 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         await AsyncStorage.setItem('@snake_scores', JSON.stringify(updatedScores));
     };
 
+    const clearHighScores = async () => {
+        setHighScores([]);
+        await AsyncStorage.removeItem('@snake_scores');
+    };
+
     return (
-        <GameContext.Provider value={{ settings, updateSettings, highScores, saveScore }}>
+        <GameContext.Provider value={{ settings, updateSettings, highScores, saveScore, clearHighScores }}>
             {children}
         </GameContext.Provider>
     );
