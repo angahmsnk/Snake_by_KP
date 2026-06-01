@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     board: { backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#333' },
     row: { flexDirection: 'row' },
     cell: { borderWidth: 0.1, borderColor: '#222' },
-    snakeCell: { backgroundColor: '#4CAF50', borderRadius: 2 },
-    snakeHead: { backgroundColor: '#8BC34A', borderWidth: 1 },
+    snakeCell: { backgroundColor: '#7fd581ff', borderRadius: 2 },
+    snakeHead: { backgroundColor: '#007016ff', borderWidth: 1 },
     fruitCell: { backgroundColor: '#FF5252', borderRadius: 10 },
     superFruitCell: { backgroundColor: '#FFD700', borderRadius: 10, borderWidth: 1, borderColor: '#FFA500' }
 });

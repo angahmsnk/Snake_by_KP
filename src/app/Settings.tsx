@@ -26,59 +26,59 @@ export default function Settings() {
         <View style={styles.outerContainer}>
             <View style={styles.cardContainer}>
                 <Text style={styles.title}>Ustawienia Gry</Text>
-                
+
                 <View style={styles.settingRow}>
                     <Text style={styles.label}>Wielkość mapy: {settings.mapSize}</Text>
-                    <Slider 
-                        minimumValue={15} 
-                        step={1} 
-                        maximumValue={30} 
+                    <Slider
+                        minimumValue={15}
+                        step={1}
+                        maximumValue={30}
                         minimumTrackTintColor="#4CAF50"
                         maximumTrackTintColor="#333"
                         thumbTintColor="#4CAF50"
-                        value={settings.mapSize} 
+                        value={settings.mapSize}
                         onValueChange={handleMapSize}
                     />
                 </View>
-                
+
                 <View style={styles.settingRow}>
                     <Text style={styles.label}>Długość węża: {settings.snakeStartLength}</Text>
-                    <Slider 
-                        minimumValue={3} 
-                        step={1} 
-                        maximumValue={10} 
+                    <Slider
+                        minimumValue={3}
+                        step={1}
+                        maximumValue={10}
                         minimumTrackTintColor="#4CAF50"
                         maximumTrackTintColor="#333"
                         thumbTintColor="#4CAF50"
-                        value={settings.snakeStartLength} 
+                        value={settings.snakeStartLength}
                         onValueChange={handleSnakeStartLength}
                     />
                 </View>
-                
+
                 <View style={styles.settingRow}>
                     <Text style={styles.label}>Czas dostępności owocu: {settings.fruitAvailabilityTime / 1000} s</Text>
-                    <Slider 
-                        minimumValue={3000} 
-                        step={1000} 
-                        maximumValue={15000} 
+                    <Slider
+                        minimumValue={3000}
+                        step={1000}
+                        maximumValue={15000}
                         minimumTrackTintColor="#4CAF50"
                         maximumTrackTintColor="#333"
                         thumbTintColor="#4CAF50"
-                        value={settings.fruitAvailabilityTime} 
+                        value={settings.fruitAvailabilityTime}
                         onValueChange={handleFruitAvailabilityTime}
                     />
                 </View>
-                
+
                 <View style={styles.settingRow}>
                     <Text style={styles.label}>Prędkość gry: {settings.speed}</Text>
-                    <Slider 
-                        minimumValue={1} 
-                        step={1} 
-                        maximumValue={10} 
+                    <Slider
+                        minimumValue={1}
+                        step={1}
+                        maximumValue={10}
                         minimumTrackTintColor="#4CAF50"
                         maximumTrackTintColor="#333"
                         thumbTintColor="#4CAF50"
-                        value={settings.speed} 
+                        value={settings.speed}
                         onValueChange={handleSpeed}
                     />
                 </View>
